@@ -1,0 +1,70 @@
+[project]
+name = " sprovider"
+version = "1.1"
+description = "Schedule provider backend."
+requires-python = ">=3.11"
+authors = [{ name = "Milinuri Nirvalen", email = "pentergust@mail.ru" }]
+license = "GPL-3.0-or-later"
+readme = "README.md"
+dependencies = [
+    "aiohttp>=3.12.15",
+    "asyncpg>=0.30.0",
+    "asyncpg-stubs>=0.30.2",
+    "click>=8.2.1",
+    "loguru>=0.7.3",
+    "openpyxl>=3.1.5",
+    "requests>=2.32.5",
+    "tortoise-orm>=0.25.1",
+    "ujson>=5.11.0",
+    "fastapi>=0.128.0",
+    "pydantic>=2.12.5",
+    "toml>=0.10.2",
+    "uvicorn>=0.40.0",
+
+]
+
+# Версия проекта -------------------------------------------------------
+
+[tool.sp]
+version = "v6.5"
+build = 267
+api_version = 7
+
+# Other dependencies --------------------------------------------------- 
+
+[dependency-groups]
+dev = ["pyright>=1.1.404", "ruff>=0.12.11"]
+
+# Ruff linter ----------------------------------------------------------
+
+[tool.ruff]
+line-length = 80
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D407",
+    "D107",
+    "D213",
+    "D203",
+    "RUF",
+    "COM",    # trailing commas, controlled by format
+    "EM101",  # EAssign to variable; remove string literal
+    "EM102",  # Exception must not use an f-string literal, assign to variable first
+    "TRY003", # Avoid specifying long messages outside the exception class
+    "INP001", # part of an implicit namespace package. Add an `__init__.py`.
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Build system ---------------------------------------------------------
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"

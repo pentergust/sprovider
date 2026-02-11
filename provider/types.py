@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 class ProviderStatus(BaseModel):
     """Техническая информация о поставщике.
-    
+
     Может быть использована чтобы отличать несколько поставщиков.
     """
 
@@ -17,9 +17,10 @@ class ProviderStatus(BaseModel):
     version: str
     url: str
 
+
 class ScheduleStatus(BaseModel):
     """Информация о расписании.
-    
+
     Они же метаданные о расписании.
     Расписывают откуда было загружено расписание.
     Используется для проверки актуальности расписания.
@@ -49,7 +50,7 @@ class ScheduleStatus(BaseModel):
 
 class ScheduleMeta(BaseModel):
     """Необходимые метаданные для расписания.
-    
+
     Минимальный набор параметров, который загружается при запуске.
     Обязательно стоит указать название и источник расписание.
     Остальные параметры заполняются автоматически поставщиком.
@@ -65,10 +66,10 @@ class ScheduleMeta(BaseModel):
 
 class Status(BaseModel):
     """Информация поставщике.
-    
+
     Технические подробности поставщика.
     Можно использовать если в проекте используется несколько поставщиков.
-    
+
     Предоставляет информацию о расписании.
     Используется для автоматической проверка обновлений.
     """
@@ -76,13 +77,19 @@ class Status(BaseModel):
     provider: ProviderStatus
     schedule: ScheduleStatus
 
+
 class LessonTime(BaseModel):
     """Время урока для расписания звонков."""
 
     start: time
     end: time
 
-TimeTable = Sequence[LessonTime]
+
+class TimeTable(BaseModel):
+    """Общее расписание звонков."""
+
+    default: Sequence[LessonTime]
+
 
 class Lesson(BaseModel):
     """Урок в расписании."""
@@ -96,21 +103,25 @@ class Lesson(BaseModel):
     Может быть несколько кабинетов, если класс делится на группы.
     """
 
+
 # Дополнительные типы для расписания
 DayLessons = MutableSequence[Lesson | None]
 ClassLessons = Sequence[DayLessons]
 ScheduleT = Mapping[str, ClassLessons]
+
 
 class Schedule(BaseModel):
     """Полное расписание уроков."""
 
     schedule: ScheduleT
 
+
 Day = Literal[0, 1, 2, 3, 4, 5]
+
 
 class ScheduleFilter(BaseModel):
     """Фильтры для получения расписания.
-    
+
     Передаются при получении расписания.
     Можно не передавать, тогда будет получено полное расписание.
     """

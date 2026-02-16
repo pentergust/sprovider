@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 from collections.abc import Sequence
+from collections import defaultdict
 from datetime import UTC, datetime, time, timedelta
 from pathlib import Path
 
@@ -12,7 +13,6 @@ import anyio
 import openpyxl
 import toml
 from loguru import logger
-from sp.counter import defaultdict
 
 from provider import types
 
